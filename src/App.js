@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import firebaseConf from './Firebase';
-import moment from 'moment';
 
 class App extends Component {
 
@@ -14,19 +13,14 @@ class App extends Component {
   async componentWillMount() {
     let formRef = firebaseConf.database().ref('data').orderByKey().limitToLast(6);
     await formRef.on('child_added', snapshot => {
-      const { lat, long, numReport, type, userId } = snapshot.val();
-      const data = { lat, long, numReport, type, userId};
+      const { lat, long, numReport, type, date, userId } = snapshot.val();
+      const data = { lat, long, numReport, type, date, userId};
       this.setState({ reports: [data].concat(this.state.reports) });
     })
   }
 
-  timeStamp = (numReport) => {
-    const time = moment.unix(numReport).format("YYYY-MM-DD HH:mm");
-    return time;
-  }
-
   getUser = (userId) => {
-    const TOKEN = '<YOUR_TOKEN>'
+    const TOKEN = ''
     const USER_URL = `https://graph.facebook.com/v2.6/${userId}?fields=first_name,last_name,profile_pic&access_token=${TOKEN}`
     return USER_URL
   }
@@ -73,7 +67,7 @@ class App extends Component {
         {reports.map((report) => 
           <div className="row" key={report.numReport}>
             <div className="col-sm-3">
-              <p>{this.timeStamp(report.numReport)}</p>
+              <p>{report.date}</p>
             </div>
             <div className="col-sm-2">
               <p> <a href={this.getUser(report.userId)} target='_blank'>{report.userId}</a></p>
