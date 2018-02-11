@@ -4,10 +4,11 @@
   "description": "ReportaBot Admin",
   "main": "index.js",
   "dependencies": {
+    "firebase": "^4.9.0",
+    "moment": "^2.20.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "^1.1.1",
-    "firebase": "^4.9.0"
+    "react-scripts": "^1.1.1"
   },
   "devDependencies": {},
   "scripts": {
